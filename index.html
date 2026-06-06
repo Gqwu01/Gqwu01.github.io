@@ -1054,6 +1054,7 @@
 
       #glow { display: none; }
       .code-rain { display: none; }
+
     }
 
     @media (max-width: 480px) {
@@ -1086,6 +1087,8 @@
 
   <!-- 代码雨装饰 -->
   <div class="code-rain" id="codeRain"></div>
+
+
 
   <!-- ========== 导航栏 ========== -->
   <nav>
@@ -1615,33 +1618,45 @@
       });
     });
 
-    /* ---------- 代码雨背景 ---------- */
+    /* ---------- 动态代码雨 ---------- */
     const codeRainEl = document.getElementById('codeRain');
-    const codeChars = '01{}[]();<>/!*&^%$#@';
+    const codeChars = '01{}[]();<>/!*&^%$#@abcdef';
+    let rainDrops = [];
 
     function initCodeRain() {
       codeRainEl.innerHTML = '';
-      const cols = Math.floor(window.innerWidth / 24);
+      rainDrops = [];
+      const cols = Math.floor(window.innerWidth / 28);
       for (let i = 0; i < cols; i++) {
-        const col = document.createElement('div');
-        col.style.cssText = `
-          position:absolute; left:${i * 24}px; top:${Math.random() * 100}%;
-          writing-mode:vertical-lr; opacity:${0.08 + Math.random() * 0.15};
-          animation: rainFall ${3 + Math.random() * 5}s linear infinite;
-          animation-delay: ${Math.random() * 5}s;
-        `;
+        const col = document.createElement('span');
+        const len = 6 + Math.floor(Math.random() * 10);
         let text = '';
-        const len = 8 + Math.floor(Math.random() * 12);
         for (let j = 0; j < len; j++) {
           text += codeChars[Math.floor(Math.random() * codeChars.length)];
         }
         col.textContent = text;
+        const duration = 4 + Math.random() * 6;
+        col.style.cssText = `
+          left:${i * 28}px;
+          animation-duration:${duration}s;
+          animation-delay:${Math.random() * 8}s;
+          opacity:${0.06 + Math.random() * 0.1};
+        `;
         codeRainEl.appendChild(col);
+        rainDrops.push({ el: col, interval: setInterval(() => {
+          const chars = col.textContent.split('');
+          const idx = Math.floor(Math.random() * chars.length);
+          chars[idx] = codeChars[Math.floor(Math.random() * codeChars.length)];
+          col.textContent = chars.join('');
+        }, 100 + Math.random() * 200) });
       }
     }
 
     initCodeRain();
-    window.addEventListener('resize', initCodeRain);
+    window.addEventListener('resize', () => {
+      rainDrops.forEach(d => clearInterval(d.interval));
+      initCodeRain();
+    });
 
     /* ---------- 平滑锚点滚动 ---------- */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
