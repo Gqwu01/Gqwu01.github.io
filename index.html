@@ -108,6 +108,77 @@
       75% { transform: translate(40px, 30px) scale(1.02); }
     }
 
+    /* ============== 动态光晕背景 ============== */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(60px);
+      animation: orbFloat 20s ease-in-out infinite;
+    }
+
+    .bg-orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 212, 170, 0.2), transparent 70%);
+      top: -15%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .bg-orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(124, 92, 252, 0.15), transparent 70%);
+      bottom: 5%;
+      right: -5%;
+      animation-delay: -7s;
+    }
+
+    .bg-orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 107, 157, 0.12), transparent 70%);
+      top: 40%;
+      left: 60%;
+      animation-delay: -14s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 40px) scale(0.9); }
+    }
+
+    /* ============== 代码雨背景 ============== */
+    .code-rain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .code-rain span {
+      position: absolute;
+      display: inline-block;
+      writing-mode: vertical-lr;
+      animation: rainFall linear infinite;
+    }
+
+    @keyframes rainFall {
+      0% { transform: translateY(-100%); opacity: 0; }
+      10% { opacity: 0.12; }
+      90% { opacity: 0.12; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
     /* ============== 扫光网格背景 ============== */
     .grid-bg {
       position: fixed;
@@ -116,11 +187,17 @@
         linear-gradient(var(--border) 1px, transparent 1px),
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 80px 80px;
-      opacity: 0.15;
+      opacity: 0.12;
       pointer-events: none;
       z-index: 0;
       mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 30%, transparent 70%);
       -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 30%, transparent 70%);
+      animation: gridPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.12; }
+      50% { opacity: 0.2; }
     }
 
     /* ============== 导航栏 ============== */
@@ -156,6 +233,44 @@
 
     .nav-logo .bracket { color: var(--primary); }
 
+    .nav-logo-welcome {
+      display: flex;
+      gap: 2px;
+    }
+
+    .nav-logo-welcome span {
+      display: inline-block;
+      font-weight: 800;
+      font-size: 1.4rem;
+      animation: welcomeColor 3s ease-in-out infinite, welcomeBounce 2s ease-in-out infinite;
+    }
+
+    .nav-logo-welcome span:nth-child(1) { animation-delay: 0s, 0s; }
+    .nav-logo-welcome span:nth-child(2) { animation-delay: 0.15s, 0.1s; }
+    .nav-logo-welcome span:nth-child(3) { animation-delay: 0.3s, 0.2s; }
+    .nav-logo-welcome span:nth-child(4) { animation-delay: 0.45s, 0.3s; }
+    .nav-logo-welcome span:nth-child(5) { animation-delay: 0.6s, 0.4s; }
+    .nav-logo-welcome span:nth-child(6) { animation-delay: 0.75s, 0.5s; }
+    .nav-logo-welcome span:nth-child(7) { animation-delay: 0.9s, 0.6s; }
+    .nav-logo-welcome span:nth-child(8) { animation-delay: 1.05s, 0.7s; }
+
+    @keyframes welcomeColor {
+      0%   { color: #00d4aa; }
+      15%  { color: #7c5cfc; }
+      30%  { color: #ff6b9d; }
+      45%  { color: #ffc93c; }
+      60%  { color: #6bcbff; }
+      75%  { color: #ff6b9d; }
+      90%  { color: #7c5cfc; }
+      100% { color: #00d4aa; }
+    }
+
+    @keyframes welcomeBounce {
+      0%, 100% { transform: translateY(0); }
+      15% { transform: translateY(-7px); }
+      30% { transform: translateY(0); }
+    }
+
     .nav-links {
       display: flex;
       gap: 36px;
@@ -189,80 +304,6 @@
 
     .nav-links a:hover::before {
       width: 100%;
-    }
-
-    /* ============== 右侧导航 ============== */
-    .side-nav {
-      position: fixed;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 99;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .side-nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      flex-direction: row-reverse;
-      transition: all 0.4s;
-    }
-
-    .side-nav-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: 2px solid var(--text-muted);
-      background: transparent;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      flex-shrink: 0;
-    }
-
-    .side-nav-label {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      opacity: 0;
-      transform: translateX(-8px);
-      transition: all 0.4s;
-      white-space: nowrap;
-    }
-
-    .side-nav-item:hover .side-nav-label {
-      opacity: 1;
-      transform: translateX(0);
-      color: var(--text-dim);
-    }
-
-    .side-nav-item:hover .side-nav-dot {
-      border-color: var(--text-dim);
-      transform: scale(1.2);
-    }
-
-    .side-nav-item.active .side-nav-dot {
-      background: var(--primary);
-      border-color: var(--primary);
-      box-shadow: 0 0 12px rgba(0, 212, 170, 0.4);
-      transform: scale(1.1);
-    }
-
-    .side-nav-item.active .side-nav-label {
-      opacity: 1;
-      transform: translateX(0);
-      color: var(--primary);
-    }
-
-    .side-nav-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--primary), transparent);
-      opacity: 0.3;
     }
 
     /* ============== Hero ============== */
@@ -313,6 +354,15 @@
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      animation: fadeUp 0.8s 0.25s ease forwards;
+      opacity: 0;
     }
 
     .hero-typed-wrap {
@@ -619,6 +669,84 @@
       box-shadow: 0 4px 16px rgba(0, 212, 170, 0.08);
     }
 
+    /* ============== 经历 ============== */
+    .experience-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      transition: all 0.4s;
+    }
+
+    .experience-card:hover {
+      border-color: rgba(0, 212, 170, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .exp-left h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .exp-role {
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-family: var(--font-mono);
+      margin-top: 4px;
+    }
+
+    .exp-date {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .exp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .exp-list li {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.7;
+    }
+
+    .exp-list li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+
+    .exp-list li .highlight {
+      color: var(--primary);
+    }
+
+    .exp-result {
+      color: var(--primary-dim) !important;
+      font-size: 0.85rem !important;
+      margin-top: 12px;
+      font-family: var(--font-mono);
+    }
+
     /* ============== 项目 ============== */
     .projects-grid {
       display: grid;
@@ -919,13 +1047,13 @@
       }
 
       .scroll-indicator { display: none; }
-      .side-nav { display: none; }
 
       .skill-category {
         padding: 24px;
       }
 
       #glow { display: none; }
+      .code-rain { display: none; }
     }
 
     @media (max-width: 480px) {
@@ -948,49 +1076,43 @@
     <div class="shape"></div>
   </div>
 
+  <!-- 动态光晕背景 -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+
   <!-- 网格背景 -->
   <div class="grid-bg"></div>
+
+  <!-- 代码雨装饰 -->
+  <div class="code-rain" id="codeRain"></div>
 
   <!-- ========== 导航栏 ========== -->
   <nav>
     <div class="nav-logo">
-      <span class="bracket">&lt;</span>Gqwu<span class="bracket">/&gt;</span>
+      <div class="nav-logo-welcome">
+        <span>欢</span><span>迎</span><span>来</span><span>到</span>
+        <span>我</span><span>的</span><span>频</span><span>道</span>
+      </div>
     </div>
     <ul class="nav-links">
       <li><a href="#about">// 关于</a></li>
       <li><a href="#skills">// 技能</a></li>
+      <li><a href="#experience">// 经历</a></li>
       <li><a href="#projects">// 项目</a></li>
       <li><a href="#contact">// 联系</a></li>
     </ul>
   </nav>
 
-  <!-- ========== 右侧导航 ========== -->
-  <nav class="side-nav">
-    <a href="#about" class="side-nav-item" data-section="about">
-      <span class="side-nav-dot"></span>
-      <span class="side-nav-label">关于</span>
-    </a>
-    <a href="#skills" class="side-nav-item" data-section="skills">
-      <span class="side-nav-dot"></span>
-      <span class="side-nav-label">技能</span>
-    </a>
-    <a href="#projects" class="side-nav-item" data-section="projects">
-      <span class="side-nav-dot"></span>
-      <span class="side-nav-label">项目</span>
-    </a>
-    <a href="#contact" class="side-nav-item" data-section="contact">
-      <span class="side-nav-dot"></span>
-      <span class="side-nav-label">联系</span>
-    </a>
-    <div class="side-nav-line"></div>
-  </nav>
-
   <!-- ========== Hero ========== -->
   <section class="hero">
-    <div class="hero-badge">EMBEDDED · SOFTWARE · ENGINEER</div>
+    <div class="hero-badge">PERSONAL · TECH · PORTFOLIO</div>
     <h1>
       <span class="gradient-text">Clarity Wu</span>
     </h1>
+    <div class="hero-subtitle">
+      嵌入式软件工程师 · 个人作品与技术分享
+    </div>
     <div class="hero-typed-wrap">
       <span id="typed-text"></span><span class="cursor"></span>
     </div>
@@ -1016,36 +1138,37 @@
       <div class="about-text reveal reveal-delay-1">
         <p>
           <strong>👋 你好！</strong> 我是 <span class="highlight">Clarity Wu</span>，
-          一名嵌入式软件开发工程师，专注于
-          <strong>智能硬件</strong> 与 <strong>消费电子</strong> 领域。
+          一名嵌入式软件工程师，专注于 <strong>智能硬件</strong> 与 <strong>消费电子</strong> 领域。
         </p>
         <p>
           熟悉从 <strong>裸机编程</strong> 到 <strong>实时操作系统（FreeRTOS / RT-Thread）</strong>
           的完整开发流程，对 STM32、ESP32 等主流 MCU 有丰富的项目经验，
           擅长驱动开发、传感器数据采集、通信协议（I2C / SPI / UART / CAN）以及电机控制。
+          具备 <strong>PCB 设计</strong>（4层板、信号完整性仿真）与硬件调试能力。
         </p>
         <p>
+          曾主导精密仪器产品的单片机程序重构与硬件 PCB Layout，设计高精度自整定温度控制系统，
+          独立完成软硬件联调，获 <strong>"优秀实习生"</strong> 称号。
           相信好的嵌入式软件 = 对硬件的深入理解 + 严谨的工程实践。
-          热爱技术，享受从零到一将产品落地的过程。
         </p>
       </div>
 
       <div class="about-stats-grid">
         <div class="stat-card reveal reveal-delay-1">
-          <div class="stat-number" data-target="3">0</div>
-          <div class="stat-label">年嵌入式经验</div>
+          <div class="stat-number" data-target="1">0</div>
+          <div class="stat-label">年工作经验</div>
         </div>
         <div class="stat-card reveal reveal-delay-2">
-          <div class="stat-number" data-target="10">0</div>
+          <div class="stat-number" data-target="5">0</div>
           <div class="stat-label">完成项目</div>
         </div>
         <div class="stat-card reveal reveal-delay-3">
-          <div class="stat-number" data-target="5">0</div>
+          <div class="stat-number" data-target="4">0</div>
           <div class="stat-label">MCU 平台</div>
         </div>
         <div class="stat-card reveal reveal-delay-4">
-          <div class="stat-number">∞</div>
-          <div class="stat-label">Bug 调试次数</div>
+          <div class="stat-number" data-target="2">0</div>
+          <div class="stat-label">PCB 打板次数</div>
         </div>
       </div>
     </div>
@@ -1067,7 +1190,7 @@
           <h3>MCU 平台</h3>
         </div>
         <div class="skill-items">
-          <span class="skill-item">STM32</span>
+          <span class="skill-item">STM32F1/F4</span>
           <span class="skill-item">ESP32</span>
           <span class="skill-item">ATmega</span>
           <span class="skill-item">GD32</span>
@@ -1089,6 +1212,8 @@
           <span class="skill-item">LwIP</span>
           <span class="skill-item">FatFS</span>
           <span class="skill-item">LVGL</span>
+          <span class="skill-item">Keil MDK</span>
+          <span class="skill-item">STM32CubeMX</span>
         </div>
       </div>
 
@@ -1098,48 +1223,155 @@
           <h3>编程语言</h3>
         </div>
         <div class="skill-items">
-          <span class="skill-item">C</span>
-          <span class="skill-item">C++</span>
+          <span class="skill-item">C / C++</span>
           <span class="skill-item">Python</span>
+          <span class="skill-item">MATLAB</span>
           <span class="skill-item">汇编</span>
           <span class="skill-item">Shell</span>
-          <span class="skill-item">MATLAB</span>
         </div>
       </div>
 
       <div class="skill-category reveal reveal-delay-4">
         <div class="skill-category-header">
           <div class="skill-icon">🔧</div>
-          <h3>工具与协议</h3>
+          <h3>硬件设计</h3>
         </div>
         <div class="skill-items">
-          <span class="skill-item">I²C</span>
-          <span class="skill-item">SPI</span>
-          <span class="skill-item">UART</span>
-          <span class="skill-item">CAN</span>
+          <span class="skill-item">Altium Designer</span>
+          <span class="skill-item">Cadence</span>
+          <span class="skill-item">立创 EDA</span>
+          <span class="skill-item">Multisim</span>
+          <span class="skill-item">4 层 PCB Layout</span>
+          <span class="skill-item">信号完整性仿真</span>
+          <span class="skill-item">示波器</span>
+          <span class="skill-item">逻辑分析仪</span>
+          <span class="skill-item">JLink</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal reveal-delay-1">
+        <div class="skill-category-header">
+          <div class="skill-icon">🌐</div>
+          <h3>协议与工具</h3>
+        </div>
+        <div class="skill-items">
+          <span class="skill-item">I²C / SPI</span>
+          <span class="skill-item">UART / CAN</span>
           <span class="skill-item">USB</span>
+          <span class="skill-item">MQTT</span>
           <span class="skill-item">Git</span>
           <span class="skill-item">KiCad</span>
-          <span class="skill-item">逻辑分析仪</span>
-          <span class="skill-item">示波器</span>
-          <span class="skill-item">JLink</span>
+          <span class="skill-item">VSCode</span>
+          <span class="skill-item">Linux</span>
+          <span class="skill-item">YOLO</span>
+          <span class="skill-item">OpenMV / K210</span>
+          <span class="skill-item">SolidWorks</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal reveal-delay-2">
+        <div class="skill-category-header">
+          <div class="skill-icon">📜</div>
+          <h3>证书</h3>
+        </div>
+        <div class="skill-items">
+          <span class="skill-item">英语六级 (CET-6)</span>
+          <span class="skill-item">HarmonyOS 应用开发</span>
+          <span class="skill-item">工业互联网嵌入式开发</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal reveal-delay-3">
+        <div class="skill-category-header">
+          <div class="skill-icon">🤖</div>
+          <h3>AI 工具链</h3>
+        </div>
+        <div class="skill-items">
+          <span class="skill-item">ChatGPT</span>
+          <span class="skill-item">DeepSeek</span>
+          <span class="skill-item">通义千问</span>
+          <span class="skill-item">本地模型部署</span>
         </div>
       </div>
 
     </div>
   </section>
 
+  <!-- ========== 经历 ========== -->
+  <section id="experience">
+    <div class="section-header reveal">
+      <div class="section-number">/ 03</div>
+      <h2 class="section-title">实习经历</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="experience-card reveal">
+      <div class="exp-header">
+        <div class="exp-left">
+          <h3>某精密仪器公司</h3>
+          <div class="exp-role">嵌入式助理工程师</div>
+        </div>
+        <div class="exp-date">2024.12 – 2025.02</div>
+      </div>
+      <ul class="exp-list">
+        <li><strong>软硬件协同升级</strong>：主导核心仪器产品的单片机程序重构与硬件 PCB Layout，设计高精度自整定温度控制系统，独立完成软硬件联调。</li>
+        <li><strong>性能优化</strong>：优化硬件电路与布局，抗干扰能力与稳定性提升 <span class="highlight">20%+</span>；重构代码结构，软件运行效率提升 <span class="highlight">30%</span>，分辨率从 1 提升至 0.1。</li>
+        <li><strong>创新温控算法</strong>：引入先进温控算法替代传统设备，硬件成本降低 <span class="highlight">10%</span>，稳定时间缩短至原来的 <span class="highlight">1/4</span>，实现动态自整定最优 PID 参数。</li>
+        <li><strong>跨部门协作</strong>：编制技术指导文档，提升生产、售后部门工作效率 <span class="highlight">50%</span>；在公司内部论坛发布技术文章 4 篇。</li>
+        <li><strong>成果</strong>：两周内掌握产品开发，一个月独立负责项目，提前通过考核并获 <span class="highlight">"优秀实习生"</span> 称号。</li>
+      </ul>
+    </div>
+
+  </section>
+
   <!-- ========== 项目 ========== -->
   <section id="projects">
     <div class="section-header reveal">
-      <div class="section-number">/ 03</div>
-      <h2 class="section-title">项目</h2>
+      <div class="section-number">/ 04</div>
+      <h2 class="section-title">项目经历</h2>
       <div class="section-line"></div>
     </div>
 
     <div class="projects-grid">
 
       <div class="project-card reveal" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">STM32</span>
+          <span class="project-tag">模糊PID</span>
+          <span class="project-tag">MATLAB</span>
+          <span class="project-tag">温控</span>
+        </div>
+        <h3>基于模糊 PID 控制算法的温控系统</h3>
+        <p>
+          将传统 PID 升级为模糊控制 + PID，解决温控系统超调、响应慢、稳定性差的问题，
+          性能提升 50%。完成模糊控制系统整体框架设计，使用 MATLAB 建模与仿真验证。
+          针对无 FPU 的 MCU，采用定点法、查表法优化算法，成功部署至单片机。
+        </p>
+        <p class="exp-result">
+          在硬件成本不变的前提下，动态自整定最优 PID 参数，控制性能显著优于传统方案。
+        </p>
+      </div>
+
+      <div class="project-card reveal reveal-delay-1" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">STM32</span>
+          <span class="project-tag">YOLO</span>
+          <span class="project-tag">MQTT</span>
+          <span class="project-tag">PCB</span>
+        </div>
+        <h3>基于多模态融合的智能交互手套与视觉伺服定位系统</h3>
+        <p>
+          项目负责人。手套端集成多传感器采集、手势识别、语音播报、物联网数据传输；
+          定位装置采用 YOLO 视觉识别、目标定位与标记、云台电机控制。
+          完成 4 层 PCB Layout（BUCK/BOOST、LDO、串口屏、电机驱动），
+          卡尔曼滤波 + 均值滤波使稳定性与准确率提升 30%。
+        </p>
+        <div class="project-links">
+          <a href="https://github.com/Gqwu01?tab=repositories" target="_blank">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2" data-tilt>
         <div class="project-tags">
           <span class="project-tag">STM32</span>
           <span class="project-tag">FreeRTOS</span>
@@ -1157,7 +1389,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal reveal-delay-1" data-tilt>
+      <div class="project-card reveal reveal-delay-3" data-tilt>
         <div class="project-tags">
           <span class="project-tag">STM32</span>
           <span class="project-tag">PID</span>
@@ -1173,7 +1405,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal reveal-delay-2" data-tilt>
+      <div class="project-card reveal reveal-delay-4" data-tilt>
         <div class="project-tags">
           <span class="project-tag">FreeRTOS</span>
           <span class="project-tag">ADC</span>
@@ -1189,7 +1421,7 @@
         </div>
       </div>
 
-      <div class="project-card reveal reveal-delay-3" data-tilt>
+      <div class="project-card reveal reveal-delay-4" data-tilt>
         <div class="project-tags">
           <span class="project-tag">ESP32</span>
           <span class="project-tag">WiFi</span>
@@ -1208,14 +1440,14 @@
     </div>
 
     <div class="projects-footer reveal">
-      <a href="https://github.com/Gqwu01?tab=repositories">查看 GitHub 全部项目 →</a>
+      <a href="https://github.com/Gqwu01?tab=repositories" target="_blank">查看 GitHub 全部项目 →</a>
     </div>
   </section>
 
   <!-- ========== 联系 ========== -->
   <section id="contact" class="contact-section">
     <div class="section-header reveal">
-      <div class="section-number">/ 04</div>
+      <div class="section-number">/ 05</div>
       <h2 class="section-title">联系我</h2>
       <div class="section-line"></div>
     </div>
@@ -1228,11 +1460,9 @@
           <a href="https://github.com/Gqwu01" class="contact-link" target="_blank">
             GitHub
           </a>
-          <a href="mailto:your-email@example.com" class="contact-link">
+          <a href="mailto:2632159426@qq.com" class="contact-link">
             Email
           </a>
-          <a href="#" class="contact-link">微信</a>
-          <a href="#" class="contact-link">LinkedIn</a>
         </div>
       </div>
     </div>
@@ -1270,10 +1500,10 @@
 
     /* ---------- 打字机效果 ---------- */
     const typedTexts = [
-      '智能硬件嵌入式软件开发',
-      '裸机 · FreeRTOS · RT-Thread',
-      'STM32 · ESP32 · ARM Cortex-M',
-      '把代码烧进芯片，让硬件活过来'
+      '嵌入式软件开发 · 个人技术站',
+      '项目作品集 · 技术备忘 · 经验分享',
+      '从芯片底层到产品落地的全记录',
+      'C/C++ · FreeRTOS · STM32 · PCB 设计'
     ];
     let textIndex = 0;
     let charIndex = 0;
@@ -1385,29 +1615,33 @@
       });
     });
 
-    /* ---------- 右侧导航高亮当前区块 ---------- */
-    const sideNavItems = document.querySelectorAll('.side-nav-item');
-    const sections = document.querySelectorAll('section[id]');
+    /* ---------- 代码雨背景 ---------- */
+    const codeRainEl = document.getElementById('codeRain');
+    const codeChars = '01{}[]();<>/!*&^%$#@';
 
-    function updateActiveNav() {
-      let current = '';
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 3) {
-          current = section.id;
+    function initCodeRain() {
+      codeRainEl.innerHTML = '';
+      const cols = Math.floor(window.innerWidth / 24);
+      for (let i = 0; i < cols; i++) {
+        const col = document.createElement('div');
+        col.style.cssText = `
+          position:absolute; left:${i * 24}px; top:${Math.random() * 100}%;
+          writing-mode:vertical-lr; opacity:${0.08 + Math.random() * 0.15};
+          animation: rainFall ${3 + Math.random() * 5}s linear infinite;
+          animation-delay: ${Math.random() * 5}s;
+        `;
+        let text = '';
+        const len = 8 + Math.floor(Math.random() * 12);
+        for (let j = 0; j < len; j++) {
+          text += codeChars[Math.floor(Math.random() * codeChars.length)];
         }
-      });
-      sideNavItems.forEach(item => {
-        if (item.dataset.section === current) {
-          item.classList.add('active');
-        } else {
-          item.classList.remove('active');
-        }
-      });
+        col.textContent = text;
+        codeRainEl.appendChild(col);
+      }
     }
 
-    window.addEventListener('scroll', updateActiveNav);
-    updateActiveNav();
+    initCodeRain();
+    window.addEventListener('resize', initCodeRain);
 
     /* ---------- 平滑锚点滚动 ---------- */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
