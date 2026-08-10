@@ -1304,8 +1304,24 @@
   <section id="experience">
     <div class="section-header reveal">
       <div class="section-number">/ 03</div>
-      <h2 class="section-title">实习经历</h2>
+      <h2 class="section-title">工作与实习经历</h2>
       <div class="section-line"></div>
+    </div>
+
+    <div class="experience-card reveal">
+      <div class="exp-header">
+        <div class="exp-left">
+          <h3>【公司名称】</h3>
+          <div class="exp-role">嵌入式软件工程师</div>
+        </div>
+        <div class="exp-date">【2022.XX – 至今】</div>
+      </div>
+      <ul class="exp-list">
+        <li><strong>OTA 升级与日志诊断</strong>：负责多款产品 OTA 升级功能开发与维护，打通蓝牙、WiFi、PC 工具三条升级通道，建立升级失败日志体系与根因分析机制，持续优化升级成功率。</li>
+        <li><strong>人机交互界面</strong>：负责 TFT 屏 + LVGL 界面开发，实现开机动画、升级动画、实时图表、多级菜单与数据显示。</li>
+        <li><strong>CAN 产测</strong>：基于上位机 + CAN 工具实现 CAN 通信与指令控制，支撑产线完成功能测试与出厂校验。</li>
+        <li><strong>平台化与 AI Agent</strong>：参与平台化代码设计与公共组件建设；开发 AI Agent 自动化流水线，覆盖软件包构建、提测包生成、代码扫描、Review 与 Bug 回归。</li>
+      </ul>
     </div>
 
     <div class="experience-card reveal">
@@ -1336,6 +1352,123 @@
     </div>
 
     <div class="projects-grid">
+
+      <div class="project-card reveal" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">BLE</span>
+          <span class="project-tag">WiFi</span>
+          <span class="project-tag">PC 工具</span>
+          <span class="project-tag">FreeRTOS</span>
+          <span class="project-tag">Flash 擦写</span>
+        </div>
+        <h3>多通道 OTA 升级系统（蓝牙 / WiFi / PC 工具）</h3>
+        <p>
+          负责产品 OTA 升级功能的完整开发与运维，打通蓝牙、WiFi、PC 工具三条升级通道，
+          覆盖升级包管理、Flash 擦写、异常恢复与失败原因分析全流程。
+        </p>
+        <ul class="exp-list">
+          <li><strong>多通道升级框架</strong>：抽象传输层接口，分别实现蓝牙（BLE GATT 分包传输、MTU 优化）、WiFi 与 PC 工具三种升级通道，一套升级流程代码多通道复用。</li>
+          <li><strong>升级包与协议设计</strong>：定义升级包格式（包头 + 版本 + CRC 校验），制定多通道统一的升级命令协议、应答与超时重发机制。</li>
+          <li><strong>Flash 擦写核心</strong>：规划 Flash 分区（Boot/App/参数/资源包），实现扇区擦除与写入驱动，写入后回读校验保证数据正确。</li>
+          <li><strong>状态机与异常恢复</strong>：实现下载/擦写/校验/重启升级状态机，支持断电恢复，与 UI 联动显示升级进度。</li>
+          <li><strong>失败原因分析</strong>：建立升级失败日志体系（错误码 + 现场数据回传），分类统计根因（通信中断/校验失败/擦写失败等），形成"问题发现—根因定位—方案改进"闭环。</li>
+        </ul>
+        <p class="exp-result">
+          升级成功率持续提升，现场升级问题定位时间大幅缩短，模块在 3+ 款新品复用。
+        </p>
+      </div>
+
+      <div class="project-card reveal reveal-delay-1" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">LVGL</span>
+          <span class="project-tag">TFT</span>
+          <span class="project-tag">国产 MCU</span>
+          <span class="project-tag">动画</span>
+        </div>
+        <h3>TFT + LVGL 人机交互界面系统</h3>
+        <p>
+          负责基于 TFT 彩屏 + LVGL 的完整人机交互界面开发，覆盖开机动画、升级动画、
+          实时图表、多级菜单与数据显示等场景。
+        </p>
+        <ul class="exp-list">
+          <li><strong>框架移植与适配</strong>：完成 LVGL 在国产 MCU（GD32/华大/灵动）平台的移植，优化显存与内存分配，保障渲染帧率。</li>
+          <li><strong>动画系统</strong>：实现开机动画（logo、渐变/图片序列）与升级动画（与 OTA 状态机联动显示升级进度）。</li>
+          <li><strong>图表显示</strong>：实现实时曲线/柱状图，坐标轴自适应、数据缓存与定时刷新机制，用于电压/电流/温度等参数可视化。</li>
+          <li><strong>页面架构</strong>：设计多级菜单导航与页面管理框架，页面动态创建/销毁与资源释放；UI 层与业务层通过消息机制解耦。</li>
+          <li><strong>Flash 存取</strong>：实现界面参数（亮度/语言/主题）与业务数据的 Flash 读写，支持掉电保存与恢复；实现特殊操作触发的隐藏调试页面。</li>
+        </ul>
+        <p class="exp-result">
+          帧率稳定、内存占用受控，UI 框架在多个产品型号复用。
+        </p>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">CAN</span>
+          <span class="project-tag">上位机</span>
+          <span class="project-tag">Python / C# / Qt</span>
+        </div>
+        <h3>CAN 产测功能（上位机 + CAN 工具）</h3>
+        <p>
+          负责基于 CAN 总线的产测功能开发，使用上位机 + CAN 工具与设备建立 CAN 通信，
+          通过指令控制完成产品功能测试与出厂校验。
+        </p>
+        <ul class="exp-list">
+          <li><strong>上位机与 CAN 通信</strong>：开发产测上位机（Python/C#/Qt），通过 CAN 工具与设备建立 CAN 总线通信，实现指令下发、数据接收与状态实时显示。</li>
+          <li><strong>产测指令集设计</strong>：设计测试/控制指令集（进入产测模式、功能自检、参数配置、结果回读），定义帧格式、应答与超时重发机制。</li>
+          <li><strong>测试流程与判定</strong>：编写测试流程控制逻辑与结果判定规则，完成测试数据记录与导出。</li>
+          <li><strong>产线联调</strong>：配合产线完成测试联调与现场问题定位，编写测试操作文档。</li>
+        </ul>
+        <p class="exp-result">
+          覆盖多个测试指令/测试项，支撑产线完成出厂测试。
+        </p>
+      </div>
+
+      <div class="project-card reveal reveal-delay-3" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">平台化</span>
+          <span class="project-tag">HAL</span>
+          <span class="project-tag">多 MCU</span>
+          <span class="project-tag">Git</span>
+        </div>
+        <h3>嵌入式软件平台化架构设计</h3>
+        <p>
+          负责多产品线嵌入式软件平台化代码设计，参与平台架构规划与公共模块建设，
+          解决多项目重复开发、维护成本高的问题。
+        </p>
+        <ul class="exp-list">
+          <li><strong>分层架构</strong>：设计 BSP 驱动层 / 中间件层 / 应用层三层架构，明确各层职责与接口规范。</li>
+          <li><strong>硬件抽象层（HAL）</strong>：统一外设驱动接口，屏蔽 STM32、GD32、华大、灵动等不同 MCU 的差异，驱动可移植。</li>
+          <li><strong>公共组件库</strong>：抽取 OTA、UI 框架、通信协议、日志、Flash 存储等公共模块，制定复用与版本管理规范。</li>
+          <li><strong>配置驱动开发</strong>：通过宏开关/配置文件适配不同硬件方案与产品需求，一套代码支撑多机型快速迭代。</li>
+        </ul>
+        <p class="exp-result">
+          新品开发周期缩短，公共代码复用率提升。
+        </p>
+      </div>
+
+      <div class="project-card reveal reveal-delay-4" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">Claude</span>
+          <span class="project-tag">opencode</span>
+          <span class="project-tag">Codex</span>
+          <span class="project-tag">Agent / Skill</span>
+        </div>
+        <h3>AI Agent 驱动的嵌入式自动化开发流水线</h3>
+        <p>
+          基于 Claude、opencode、Codex 开发定制化 Agent 与 Skill，搭建覆盖开发全流程的自动化流水线，
+          显著提升团队开发与交付效率。
+        </p>
+        <ul class="exp-list">
+          <li><strong>Agent 与 Skill 开发</strong>：覆盖需求导入、文档解析、方案设计、代码生成、自动编译、烧录运行、日志分析、Bug 回归、测试生成与代码合并上传等场景。</li>
+          <li><strong>构建与打包自动化</strong>：实现软件包一键构建与提测软件包自动生成，规范版本管理与交付流程。</li>
+          <li><strong>代码质量关卡</strong>：实现合并前自动代码扫描、Code Review 与 Bug 分析，在合并入口拦截缺陷。</li>
+          <li><strong>验证闭环</strong>：打通自动编译—烧录运行—日志分析—Bug 回归—测试用例生成闭环，减少人工重复操作。</li>
+        </ul>
+        <p class="exp-result">
+          提测包生成时间缩短，合并前缺陷被有效拦截，团队重复性工作大幅减少。
+        </p>
+      </div>
 
       <div class="project-card reveal" data-tilt>
         <div class="project-tags">
