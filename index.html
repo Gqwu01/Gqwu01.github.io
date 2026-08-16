@@ -1320,9 +1320,9 @@
         <div class="exp-date">2025.07 – 至今</div>
       </div>
       <ul class="exp-list">
-        <li><strong>OTA 升级与日志诊断</strong>：负责多款产品 OTA 升级功能开发与维护，打通蓝牙、WiFi、PC 工具三条升级通道，建立升级失败日志体系与根因分析机制，持续优化升级成功率。</li>
-        <li><strong>人机交互界面</strong>：负责 TFT 屏 + LVGL 界面开发，实现开机动画、升级动画、实时图表、多级菜单与数据显示。</li>
-        <li><strong>CAN 产测</strong>：基于上位机 + CAN 工具实现 CAN 通信与指令控制，支撑产线完成功能测试与出厂校验。</li>
+        <li><strong>OTA 升级与日志诊断</strong>：负责 OTA 升级系统架构设计与开发维护，打通蓝牙、WiFi、PC 工具三条升级通道，建立升级诊断体系（错误码 + 日志回传 + 根因分析），持续优化升级成功率。</li>
+        <li><strong>人机交互界面</strong>：负责 TFT 屏 + LVGL 界面开发，实现开机动画、升级动画、实时图表、多级菜单与数据显示，并对渲染性能（双缓冲/DMA 刷新、局部刷新）进行优化。</li>
+        <li><strong>CAN 产测</strong>：负责产测软件架构与开发，基于上位机 + CAN 工具实现 CAN 通信与指令控制，设计产测协议与指令集，支撑产线完成功能测试与出厂校验。</li>
         <li><strong>平台化与 AI Agent</strong>：参与平台化代码设计与公共组件建设；开发 AI Agent 自动化流水线，覆盖软件包构建、提测包生成、代码扫描、Review 与 Bug 回归。</li>
       </ul>
     </div>
@@ -1364,20 +1364,20 @@
           <span class="project-tag">FreeRTOS</span>
           <span class="project-tag">Flash 擦写</span>
         </div>
-        <h3>多通道 OTA 升级系统（蓝牙 / WiFi / PC 工具）</h3>
+        <h3>多通道 OTA 升级系统（可靠性工程）</h3>
         <p>
-          负责产品 OTA 升级功能的完整开发与运维，打通蓝牙、WiFi、PC 工具三条升级通道，
-          覆盖升级包管理、Flash 擦写、异常恢复与失败原因分析全流程。
+          负责 OTA 升级系统的架构设计与开发运维，打通蓝牙、WiFi、PC 工具三条升级通道，
+          构建"传输—擦写—校验—恢复"闭环，并建立数据驱动的升级诊断体系。
         </p>
         <ul class="exp-list">
-          <li><strong>多通道升级框架</strong>：抽象传输层接口，分别实现蓝牙（BLE GATT 分包传输、MTU 优化）、WiFi 与 PC 工具三种升级通道，一套升级流程代码多通道复用。</li>
-          <li><strong>升级包与协议设计</strong>：定义升级包格式（包头 + 版本 + CRC 校验），制定多通道统一的升级命令协议、应答与超时重发机制。</li>
-          <li><strong>Flash 擦写核心</strong>：规划 Flash 分区（Boot/App/参数/资源包），实现扇区擦除与写入驱动，写入后回读校验保证数据正确。</li>
-          <li><strong>状态机与异常恢复</strong>：实现下载/擦写/校验/重启升级状态机，支持断电恢复，与 UI 联动显示升级进度。</li>
-          <li><strong>失败原因分析</strong>：建立升级失败日志体系（错误码 + 现场数据回传），分类统计根因（通信中断/校验失败/擦写失败等），形成"问题发现—根因定位—方案改进"闭环。</li>
+          <li><strong>传输层抽象与多通道框架</strong>：抽象统一传输接口，分别接入蓝牙（BLE GATT 分包传输）、WiFi（TCP/HTTP）与 PC 工具三条通道，核心升级流程与传输通道解耦，新增通道无需改动核心逻辑。</li>
+          <li><strong>升级包与协议设计</strong>：定义升级包格式（包头 + 版本 + 校验），设计统一升级命令协议，覆盖应答、超时重发与完整性校验。</li>
+          <li><strong>Flash 存储管理</strong>：规划 Boot/App/参数/资源包分区，实现扇区擦除与写入驱动，写入后回读校验保证数据正确。</li>
+          <li><strong>状态机与异常恢复</strong>：设计下载/擦写/校验/重启状态机，覆盖断电、通信中断、重复升级等边界场景，与 UI 升级动画联动显示进度。</li>
+          <li><strong>升级诊断体系</strong>：建立错误码体系与现场日志回传机制，分类统计失败根因，数据驱动改进，形成"问题发现—根因定位—方案改进"闭环。</li>
         </ul>
         <p class="exp-result">
-          升级成功率持续提升，现场升级问题定位时间大幅缩短，模块在 3+ 款新品复用。
+          升级成功率持续提升，现场问题定位时间大幅缩短，模块在 3+ 款新品复用。
         </p>
       </div>
 
@@ -1388,20 +1388,20 @@
           <span class="project-tag">国产 MCU</span>
           <span class="project-tag">动画</span>
         </div>
-        <h3>TFT + LVGL 人机交互界面系统</h3>
+        <h3>TFT + LVGL 交互界面系统（UI 性能与框架）</h3>
         <p>
-          负责基于 TFT 彩屏 + LVGL 的完整人机交互界面开发，覆盖开机动画、升级动画、
-          实时图表、多级菜单与数据显示等场景。
+          负责基于 TFT 彩屏 + LVGL 的嵌入式交互界面系统，在 MCU 资源受限条件下实现流畅动画、
+          实时数据可视化与多级交互，并沉淀为多机型复用的 UI 框架。
         </p>
         <ul class="exp-list">
-          <li><strong>框架移植与适配</strong>：完成 LVGL 在国产 MCU（GD32/华大/灵动）平台的移植，优化显存与内存分配，保障渲染帧率。</li>
-          <li><strong>动画系统</strong>：实现开机动画（logo、渐变/图片序列）与升级动画（与 OTA 状态机联动显示升级进度）。</li>
-          <li><strong>图表显示</strong>：实现实时曲线/柱状图，坐标轴自适应、数据缓存与定时刷新机制，用于电压/电流/温度等参数可视化。</li>
-          <li><strong>页面架构</strong>：设计多级菜单导航与页面管理框架，页面动态创建/销毁与资源释放；UI 层与业务层通过消息机制解耦。</li>
-          <li><strong>Flash 存取</strong>：实现界面参数（亮度/语言/主题）与业务数据的 Flash 读写，支持掉电保存与恢复；实现特殊操作触发的隐藏调试页面。</li>
+          <li><strong>平台移植与资源适配</strong>：完成 LVGL 在国产 MCU（GD32/华大/灵动）平台移植与显示驱动适配；中文字体与图片素材外置 SPI Flash，"常驻 + 按需加载"两级资源策略控制内存与 Flash 占用。</li>
+          <li><strong>渲染性能优化</strong>：采用双缓冲 + DMA 刷新与局部刷新（脏矩形）方案减少无效重绘，对比不同刷新策略的 CPU 占用与帧率，定位并优化渲染瓶颈。</li>
+          <li><strong>性能剖析</strong>：针对帧率、CPU、内存做系统性剖析与分配优化，动画流畅、内存峰值可控。</li>
+          <li><strong>交互架构</strong>：多级菜单导航与页面管理框架，页面动态创建/销毁与资源回收；UI 与业务层消息机制解耦；实时曲线/柱状图数据可视化。</li>
+          <li><strong>Flash 存取</strong>：界面参数与业务数据读写、掉电保存恢复；特殊操作触发的隐藏调试页面。</li>
         </ul>
         <p class="exp-result">
-          帧率稳定、内存占用受控，UI 框架在多个产品型号复用。
+          帧率稳定、内存占用受控、Flash 素材节省，UI 框架在多个产品型号复用。
         </p>
       </div>
 
@@ -1411,16 +1411,16 @@
           <span class="project-tag">上位机</span>
           <span class="project-tag">Python / C# / Qt</span>
         </div>
-        <h3>CAN 产测功能（上位机 + CAN 工具）</h3>
+        <h3>CAN 产测系统（上位机软件架构）</h3>
         <p>
-          负责基于 CAN 总线的产测功能开发，使用上位机 + CAN 工具与设备建立 CAN 通信，
-          通过指令控制完成产品功能测试与出厂校验。
+          负责 CAN 产测软件的设计与开发，从协议设计、传输链路到测试流程构建完整产测体系，
+          通过软件架构支撑多机型、多产线复用。
         </p>
         <ul class="exp-list">
-          <li><strong>上位机与 CAN 通信</strong>：开发产测上位机（Python/C#/Qt），通过 CAN 工具与设备建立 CAN 总线通信，实现指令下发、数据接收与状态实时显示。</li>
-          <li><strong>产测指令集设计</strong>：设计测试/控制指令集（进入产测模式、功能自检、参数配置、结果回读），定义帧格式、应答与超时重发机制。</li>
+          <li><strong>产测协议与指令集设计</strong>：设计分层指令体系——测试指令（进入产测模式、功能自检）、控制指令（参数配置、状态查询）、数据指令（结果回读、标定值下发），定义帧格式、ID 规划、应答与超时重发机制。</li>
+          <li><strong>上位机软件架构</strong>：采用通信层/业务层/界面层分层设计，基于 CAN 工具 SDK 二次开发实现指令下发、数据接收与状态实时显示。</li>
           <li><strong>测试流程与判定</strong>：编写测试流程控制逻辑与结果判定规则，完成测试数据记录与导出。</li>
-          <li><strong>产线联调</strong>：配合产线完成测试联调与现场问题定位，编写测试操作文档。</li>
+          <li><strong>产线支持</strong>：配合产线完成测试联调与现场问题定位，编写测试操作文档。</li>
         </ul>
         <p class="exp-result">
           覆盖多个测试指令/测试项，支撑产线完成出厂测试。
@@ -1428,6 +1428,29 @@
       </div>
 
       <div class="project-card reveal reveal-delay-3" data-tilt>
+        <div class="project-tags">
+          <span class="project-tag">Agent</span>
+          <span class="project-tag">日志/协议解析</span>
+          <span class="project-tag">故障定位</span>
+          <span class="project-tag">Python</span>
+        </div>
+        <h3>日志分析助手（故障定位 Agent）</h3>
+        <p>
+          针对故障排查依赖人工翻阅日志、定位缓慢的问题，开发日志分析助手：自动解析
+          设备日志与通信协议数据，定位故障代码与问题模块，输出结构化分析结论。
+        </p>
+        <ul class="exp-list">
+          <li><strong>日志与协议解析</strong>：解析设备日志格式与自定义通信协议（帧格式、错误码表），自动提取时间戳、模块、错误码、参数等关键字段，支持批量分析。</li>
+          <li><strong>故障定位引擎</strong>：建立"错误码→故障模块"映射知识库，结合日志上下文（错误序列、前置事件）自动定位故障代码与问题模块。</li>
+          <li><strong>分析报告生成</strong>：自动输出事件时间线、错误序列、疑似根因与建议排查方向，辅助研发快速复现与修复。</li>
+          <li><strong>工具链集成</strong>：以命令行/上位机形式交付，集成到售后与产测工具链，一键分析现场回传日志。</li>
+        </ul>
+        <p class="exp-result">
+          单条日志分析由人工数分钟缩短至秒级，故障定位准确率显著提升。
+        </p>
+      </div>
+
+      <div class="project-card reveal reveal-delay-4" data-tilt>
         <div class="project-tags">
           <span class="project-tag">平台化</span>
           <span class="project-tag">HAL</span>
@@ -1450,7 +1473,7 @@
         </p>
       </div>
 
-      <div class="project-card reveal reveal-delay-4" data-tilt>
+      <div class="project-card reveal reveal-delay-5" data-tilt>
         <div class="project-tags">
           <span class="project-tag">Claude</span>
           <span class="project-tag">opencode</span>
