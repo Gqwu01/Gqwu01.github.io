@@ -1194,11 +1194,12 @@
         </div>
         <div class="skill-items">
           <span class="skill-item">STM32F1/F4</span>
-          <span class="skill-item">ESP32</span>
-          <span class="skill-item">ATmega</span>
           <span class="skill-item">GD32</span>
+          <span class="skill-item">ESP32</span>
           <span class="skill-item">ARM Cortex-M</span>
-          <span class="skill-item">RISC-V</span>
+          <span class="skill-item">RK3588</span>
+          <span class="skill-item">Raspberry Pi</span>
+          <span class="skill-item">K210</span>
         </div>
       </div>
 
@@ -1397,7 +1398,7 @@
           实时数据可视化与多级交互，并沉淀为多机型复用的 UI 框架。
         </p>
         <ul class="exp-list">
-          <li><strong>平台移植与资源适配</strong>：完成 LVGL 在国产 MCU（GD32/华大/灵动）平台移植与显示驱动适配；中文字体与图片素材外置 SPI Flash，"常驻 + 按需加载"两级资源策略控制内存与 Flash 占用。</li>
+          <li><strong>平台移植与资源适配</strong>：完成 LVGL 在国产 MCU（GD32）平台移植与显示驱动适配；中文字体与图片素材外置 SPI Flash，"常驻 + 按需加载"两级资源策略控制内存与 Flash 占用。</li>
           <li><strong>渲染性能优化</strong>：采用双缓冲 + DMA 刷新与局部刷新（脏矩形）方案减少无效重绘，对比不同刷新策略的 CPU 占用与帧率，定位并优化渲染瓶颈。</li>
           <li><strong>性能剖析</strong>：针对帧率、CPU、内存做系统性剖析与分配优化，动画流畅、内存峰值可控。</li>
           <li><strong>交互架构</strong>：多级菜单导航与页面管理框架，页面动态创建/销毁与资源回收；UI 与业务层消息机制解耦；实时曲线/柱状图数据可视化。</li>
@@ -1467,7 +1468,7 @@
         </p>
         <ul class="exp-list">
           <li><strong>分层架构</strong>：设计 BSP 驱动层 / 中间件层 / 应用层三层架构，明确各层职责与接口规范。</li>
-          <li><strong>硬件抽象层（HAL）</strong>：统一外设驱动接口，屏蔽 STM32、GD32、华大、灵动等不同 MCU 的差异，驱动可移植。</li>
+          <li><strong>硬件抽象层（HAL）</strong>：统一外设驱动接口，屏蔽 STM32、GD32 等不同 MCU 的差异，驱动可移植。</li>
           <li><strong>公共组件库</strong>：抽取 OTA、UI 框架、通信协议、日志、Flash 存储等公共模块，制定复用与版本管理规范。</li>
           <li><strong>配置驱动开发</strong>：通过宏开关/配置文件适配不同硬件方案与产品需求，一套代码支撑多机型快速迭代。</li>
         </ul>
